@@ -27,13 +27,7 @@ export const getEquipmentById: RequestHandler = (req, res) => {
 }
 
 export const createEquipment: RequestHandler = (req, res) => {
-    const userPayload = req.body;
-
-    console.log("Получены данные: ", userPayload);
-
-    const newEquipment = createEquipmentFromService(userPayload)
-
-    console.log("Создано оборудование: ", newEquipment)
+    const newEquipment = createEquipmentFromService(req.body)
 
     res.status(201).json(newEquipment)
 }

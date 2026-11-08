@@ -1,6 +1,10 @@
-type EquipmentType = "generator" | "transformer" | "turbine";
+export const EquipmentTypes = ["generator", "transformer", "turbine"] as const;
 
-type EquipmentStatus = "active" | "maintenance" | "inactive";
+export type EquipmentType = (typeof EquipmentTypes)[number];
+
+export const EquipmentStatuses = ["active", "maintenance", "inactive"] as const;
+
+export type EquipmentStatus = (typeof EquipmentStatuses)[number];
 
 export interface Equipment {
   id: number;
