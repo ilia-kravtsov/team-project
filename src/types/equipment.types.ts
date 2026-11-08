@@ -7,7 +7,7 @@ export const EquipmentStatuses = ["active", "maintenance", "inactive"] as const;
 export type EquipmentStatus = (typeof EquipmentStatuses)[number];
 
 export interface Equipment {
-  id: number;
+  id: string;
   name: string;
   type: EquipmentType;
   status: EquipmentStatus;

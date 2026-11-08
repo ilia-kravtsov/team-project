@@ -1,6 +1,6 @@
 import type { RequestHandler } from "express";
 import {
-  createEquipmentFromService,
+  createEquipmentFromService, deleteEquipmentFromService,
   getAllEquipmentFromService,
   getEquipmentByIdFromService
 } from "../services/equipment.service.js";
@@ -12,7 +12,7 @@ export const getAllEquipment: RequestHandler = (req, res) => {
 }
 
 export const getEquipmentById: RequestHandler = (req, res) => {
-  const id = Number(req.params.id)
+  const id = String(req.params.id)
   const equipmentById = getEquipmentByIdFromService(id);
 
   if (!equipmentById) {
@@ -30,4 +30,19 @@ export const createEquipment: RequestHandler = (req, res) => {
     const newEquipment = createEquipmentFromService(req.body)
 
     res.status(201).json(newEquipment)
+}
+
+export const deleteEquipment: RequestHandler = (req, res) => {
+  const id = String(req.params.id)
+  const result = deleteEquipmentFromService(id)
+
+  if (!result) {
+    res.status(404).json({
+      message: "EQUIPMENT_NOT_FOUND"
+    })
+
+    return;
+  }
+
+  res.status(204).end();
 }
