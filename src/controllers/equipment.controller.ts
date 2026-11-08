@@ -1,5 +1,9 @@
 import type { RequestHandler } from "express";
-import {getAllEquipmentFromService, getEquipmentByIdFromService} from "../services/equipment.service.js";
+import {
+  createEquipmentFromService,
+  getAllEquipmentFromService,
+  getEquipmentByIdFromService
+} from "../services/equipment.service.js";
 
 export const getAllEquipment: RequestHandler = (req, res) => {
   const equipment = getAllEquipmentFromService();
@@ -20,4 +24,16 @@ export const getEquipmentById: RequestHandler = (req, res) => {
   }
 
   res.json(equipmentById)
+}
+
+export const createEquipment: RequestHandler = (req, res) => {
+    const userPayload = req.body;
+
+    console.log("Получены данные: ", userPayload);
+
+    const newEquipment = createEquipmentFromService(userPayload)
+
+    console.log("Создано оборудование: ", newEquipment)
+
+    res.status(201).json(newEquipment)
 }

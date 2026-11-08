@@ -12,6 +12,10 @@ app.get('/health', (req, res) => {
   })
 })
 
+app.use(express.json({
+  limit: "100kb"
+}));
+
 app.use('/api', infoRouter);
 app.use('/api/equipment', equipmentRouter);
 
