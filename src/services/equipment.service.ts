@@ -1,10 +1,11 @@
 import type {
-  CreateEquipment,
-  Equipment
+  ClientEquipment,
+  Equipment,
+  PatchEquipment
 } from "../types/equipment.types.js";
 import { randomUUID } from "node:crypto";
 
-const equipment: Equipment[] = [
+let equipment: Equipment[] = [
   { id: randomUUID(), name: "Generator G-001", type: "generator", status: "active" },
   { id: randomUUID(), name: "Transformer T-001", type: "transformer", status: "maintenance" },
   { id: randomUUID(), name: "Turbine W-001", type: "turbine", status: "inactive" }
@@ -18,7 +19,7 @@ export function getEquipmentByIdFromService(id: string): Equipment | undefined {
   return equipment.find(item => item.id === id);
 }
 
-export function createEquipmentFromService(userPayload: CreateEquipment): Equipment {
+export function createEquipmentFromService(userPayload: ClientEquipment): Equipment {
   const newEquipment = {
     id: randomUUID(),
     name: userPayload.name,
@@ -29,6 +30,18 @@ export function createEquipmentFromService(userPayload: CreateEquipment): Equipm
   equipment.push(newEquipment);
 
   return newEquipment
+}
+
+export function updateEquipmentFromService(userPayload: PatchEquipment, id: string) {
+  const updatedEquipment = equipment.find(item => item.id === id)
+
+  if (!updatedEquipment) {
+    return undefined;
+  }
+
+  Object.assign(updatedEquipment, userPayload);
+
+  return updatedEquipment;
 }
 
 export function deleteEquipmentFromService(id: string): boolean {

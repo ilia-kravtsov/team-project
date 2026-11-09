@@ -1,5 +1,8 @@
 import type { RequestHandler } from "express";
-import { EquipmentStatuses, EquipmentTypes} from "../types/equipment.types.js";
+import {
+  EquipmentStatuses,
+  EquipmentTypes
+} from "../types/equipment.types.js";
 
 export const validateEquipment: RequestHandler = (req, res, next) => {
   const userPayload = req.body;

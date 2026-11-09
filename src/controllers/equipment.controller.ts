@@ -1,9 +1,15 @@
 import type { RequestHandler } from "express";
 import {
-  createEquipmentFromService, deleteEquipmentFromService,
+  createEquipmentFromService,
+  deleteEquipmentFromService,
   getAllEquipmentFromService,
-  getEquipmentByIdFromService
+  getEquipmentByIdFromService,
+  updateEquipmentFromService
 } from "../services/equipment.service.js";
+import {
+  EquipmentParams,
+  PatchEquipment
+} from "../types/equipment.types.js";
 
 export const getAllEquipment: RequestHandler = (req, res) => {
   const equipment = getAllEquipmentFromService();
@@ -11,8 +17,8 @@ export const getAllEquipment: RequestHandler = (req, res) => {
   res.json(equipment)
 }
 
-export const getEquipmentById: RequestHandler = (req, res) => {
-  const id = String(req.params.id)
+export const getEquipmentById: RequestHandler<EquipmentParams> = (req, res) => {
+  const id = req.params.id;
   const equipmentById = getEquipmentByIdFromService(id);
 
   if (!equipmentById) {
@@ -32,8 +38,39 @@ export const createEquipment: RequestHandler = (req, res) => {
     res.status(201).json(newEquipment)
 }
 
-export const deleteEquipment: RequestHandler = (req, res) => {
-  const id = String(req.params.id)
+export const updateEquipment: RequestHandler<EquipmentParams> = (req, res) => {
+  const userPayload = req.body;
+  const id = req.params.id;
+
+  const payload: PatchEquipment = {}
+
+  if (Object.hasOwn(userPayload, "name")) {
+    payload.name = userPayload.name;
+  }
+
+  if (Object.hasOwn(userPayload, "type")) {
+    payload.type = userPayload.type;
+  }
+
+  if (Object.hasOwn(userPayload, "status")) {
+    payload.status = userPayload.status;
+  }
+
+  const updatedEquipment = updateEquipmentFromService(payload, id);
+
+  if (!updatedEquipment) {
+    res.status(404).json({
+      message: "EQUIPMENT_NOT_FOUND"
+    })
+
+    return;
+  }
+
+  res.json(updatedEquipment)
+}
+
+export const deleteEquipment: RequestHandler<EquipmentParams> = (req, res) => {
+  const id = req.params.id;
   const result = deleteEquipmentFromService(id)
 
   if (!result) {
