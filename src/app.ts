@@ -1,7 +1,8 @@
 import express from "express";
-import { router } from "./routes/info.routes.js";
+import { infoRouter } from "./routes/info.routes.js";
 import { notFound } from "./middleware/not-found.js";
-import {errorHandler} from "./middleware/error-handler.js";
+import { errorHandler } from "./middleware/error-handler.js";
+import { equipmentRouter } from "./routes/equipment.routes.js";
 
 export const app = express();
 
@@ -11,8 +12,12 @@ app.get('/health', (req, res) => {
   })
 })
 
-app.use('/api', router)
+app.use(express.json({
+  limit: "100kb"
+}));
+
+app.use('/api', infoRouter);
+app.use('/api/equipment', equipmentRouter);
 
 app.use(notFound)
-
 app.use(errorHandler)
