@@ -6,6 +6,7 @@ import {
   ClientEquipment,
   PatchEquipment
 } from "../schemas/equipment.schema.js";
+import {findAllEquipment, findEquipmentById} from "../repositories/equipment.repository.js";
 
 let equipment: Equipment[] = [
   { id: randomUUID(), name: "Generator G-001", type: "generator", status: "active" },
@@ -13,12 +14,12 @@ let equipment: Equipment[] = [
   { id: randomUUID(), name: "Turbine W-001", type: "turbine", status: "inactive" }
 ];
 
-export function getAllEquipmentFromService(): Equipment[] {
-  return equipment;
+export async function getAllEquipmentFromService(): Promise<Equipment[]> {
+  return await findAllEquipment();
 }
 
-export function getEquipmentByIdFromService(id: string): Equipment | undefined {
-  return equipment.find(item => item.id === id);
+export async function getEquipmentByIdFromService(id: string): Promise<Equipment | undefined> {
+  return await findEquipmentById(id);
 }
 
 export function createEquipmentFromService(userPayload: ClientEquipment): Equipment {

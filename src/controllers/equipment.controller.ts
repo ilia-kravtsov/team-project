@@ -11,15 +11,15 @@ import {
 } from "../types/equipment.types.js";
 import {PatchEquipment} from "../schemas/equipment.schema.js";
 
-export const getAllEquipment: RequestHandler = (req, res) => {
-  const equipment = getAllEquipmentFromService();
+export const getAllEquipment: RequestHandler = async (req, res) => {
+  const equipment = await getAllEquipmentFromService();
 
   res.json(equipment)
 }
 
-export const getEquipmentById: RequestHandler<EquipmentParams> = (req, res) => {
+export const getEquipmentById: RequestHandler<EquipmentParams> = async (req, res) => {
   const id = req.params.id;
-  const equipmentById = getEquipmentByIdFromService(id);
+  const equipmentById = await getEquipmentByIdFromService(id);
 
   if (!equipmentById) {
     res.status(404).json({
