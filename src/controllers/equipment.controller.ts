@@ -8,8 +8,8 @@ import {
 } from "../services/equipment.service.js";
 import {
   EquipmentParams,
-  PatchEquipment
 } from "../types/equipment.types.js";
+import {PatchEquipment} from "../schemas/equipment.schema.js";
 
 export const getAllEquipment: RequestHandler = (req, res) => {
   const equipment = getAllEquipmentFromService();

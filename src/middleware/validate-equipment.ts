@@ -1,35 +1,18 @@
 import type { RequestHandler } from "express";
-import {
-  EquipmentStatuses,
-  EquipmentTypes
-} from "../types/equipment.types.js";
+import {createEquipmentSchema} from "../schemas/equipment.schema.js";
 
 export const validateEquipment: RequestHandler = (req, res, next) => {
-  const userPayload = req.body;
+  const result = createEquipmentSchema.safeParse(req.body);
 
-  if (
-    typeof userPayload?.name !== "string" ||
-    userPayload.name.trim() === ""
-  ) {
+  if (!result.success) {
     res.status(400).json({
-      error: "INVALID_EQUIPMENT_NAME"
-    });
-    return;
-  }
-
-  if (!EquipmentTypes.includes(userPayload?.type)) {
-    res.status(400).json({
-      error: "INVALID_EQUIPMENT_TYPE"
+      error: "VALIDATION_ERROR",
+      details: result.error.issues
     })
     return;
   }
 
-  if (!EquipmentStatuses.includes(userPayload?.status)) {
-    res.status(400).json({
-      error: "INVALID_EQUIPMENT_STATUS"
-    })
-    return;
-  }
+  req.body = result.data
 
   next()
 }

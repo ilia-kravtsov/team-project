@@ -1,9 +1,11 @@
 import type {
-  ClientEquipment,
   Equipment,
-  PatchEquipment
 } from "../types/equipment.types.js";
 import { randomUUID } from "node:crypto";
+import {
+  ClientEquipment,
+  PatchEquipment
+} from "../schemas/equipment.schema.js";
 
 let equipment: Equipment[] = [
   { id: randomUUID(), name: "Generator G-001", type: "generator", status: "active" },
