@@ -12,6 +12,7 @@ export interface Equipment {
   type: EquipmentType;
   status: EquipmentStatus;
   createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface EquipmentParams {
