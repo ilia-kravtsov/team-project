@@ -1,4 +1,5 @@
 import type { Equipment } from "../types/equipment.types.js";
+import { EquipmentModel } from "../models/equipment.model.js";
 
 // Временное хранилище данных
 const equipment: Equipment[] = [
@@ -17,8 +18,19 @@ const equipment: Equipment[] = [
 ];
 
 export const findAllEquipment = async (): Promise<Equipment[]> => {
-  return equipment;
-}
+  const data = await EquipmentModel.findAll();
+
+  return data.map((equipment): Equipment => {
+    return {
+      id: equipment.id,
+      name: equipment.name,
+      type: equipment.type,
+      status: equipment.status,
+      createdAt: equipment.createdAt.toISOString(),
+      updatedAt: equipment.updatedAt.toISOString(),
+    };
+  });
+};
 
 export const findEquipmentById = async (id: string): Promise<Equipment | undefined> => {
   return equipment.find(item => item.id === id);

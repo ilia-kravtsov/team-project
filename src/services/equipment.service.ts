@@ -6,7 +6,10 @@ import {
   ClientEquipment,
   PatchEquipment
 } from "../schemas/equipment.schema.js";
-import {findAllEquipment, findEquipmentById} from "../repositories/equipment.repository.js";
+import {
+  findAllEquipment,
+  findEquipmentById
+} from "../repositories/equipment.repository.js";
 
 let equipment: Equipment[] = [
   { id: randomUUID(), name: "Generator G-001", type: "generator", status: "active" },
