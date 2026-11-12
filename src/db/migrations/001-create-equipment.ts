@@ -9,6 +9,7 @@ import {
   EquipmentTypes
 } from "../../types/equipment.types.js";
 
+// MigrationFn<QueryInterface> - тип, который помогает проверить соответствие функции ожидаемому интерфейсу Umzug
 export const up: MigrationFn<QueryInterface> = async ({ context }) => {
   await context.createTable("equipment", {
     id: {
