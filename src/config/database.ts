@@ -2,9 +2,9 @@ import { Sequelize } from 'sequelize';
 
 // Здесь настраиваю подключение к PostgreSQL через ORM Sequelize
 export const sequelize = new Sequelize(
-  '***',
-  '***',
-  '***',
+  'equipment_db',
+  'equipment_user',
+  'equipment_password',
   {
     host: 'localhost',    // Адрес сервера PostgreSQL
     port: 5432,           // Порт подключения к БД

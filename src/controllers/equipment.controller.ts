@@ -32,13 +32,13 @@ export const getEquipmentById: RequestHandler<EquipmentParams> = async (req, res
   res.json(equipmentById)
 }
 
-export const createEquipment: RequestHandler = (req, res) => {
-    const newEquipment = createEquipmentFromService(req.body)
+export const createEquipment: RequestHandler = async (req, res) => {
+    const newEquipment = await createEquipmentFromService(req.body)
 
     res.status(201).json(newEquipment)
 }
 
-export const updateEquipment: RequestHandler<EquipmentParams> = (req, res) => {
+export const updateEquipment: RequestHandler<EquipmentParams> = async (req, res) => {
   const userPayload = req.body;
   const id = req.params.id;
 
@@ -56,7 +56,7 @@ export const updateEquipment: RequestHandler<EquipmentParams> = (req, res) => {
     payload.status = userPayload.status;
   }
 
-  const updatedEquipment = updateEquipmentFromService(payload, id);
+  const updatedEquipment = await updateEquipmentFromService(id, payload);
 
   if (!updatedEquipment) {
     res.status(404).json({
@@ -69,9 +69,9 @@ export const updateEquipment: RequestHandler<EquipmentParams> = (req, res) => {
   res.json(updatedEquipment)
 }
 
-export const deleteEquipment: RequestHandler<EquipmentParams> = (req, res) => {
+export const deleteEquipment: RequestHandler<EquipmentParams> = async (req, res) => {
   const id = req.params.id;
-  const result = deleteEquipmentFromService(id)
+  const result = await deleteEquipmentFromService(id)
 
   if (!result) {
     res.status(404).json({
