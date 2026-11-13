@@ -1,21 +1,16 @@
 import type {
   Equipment,
 } from "../types/equipment.types.js";
-import { randomUUID } from "node:crypto";
 import {
   ClientEquipment,
   PatchEquipment
 } from "../schemas/equipment.schema.js";
 import {
+  createEquipment, deleteEquipment,
   findAllEquipment,
-  findEquipmentById
+  findEquipmentById,
+  updateEquipment
 } from "../repositories/equipment.repository.js";
-
-let equipment: Equipment[] = [
-  { id: randomUUID(), name: "Generator G-001", type: "generator", status: "active" },
-  { id: randomUUID(), name: "Transformer T-001", type: "transformer", status: "maintenance" },
-  { id: randomUUID(), name: "Turbine W-001", type: "turbine", status: "inactive" }
-];
 
 export async function getAllEquipmentFromService(): Promise<Equipment[]> {
   return await findAllEquipment();
@@ -25,39 +20,14 @@ export async function getEquipmentByIdFromService(id: string): Promise<Equipment
   return await findEquipmentById(id);
 }
 
-export function createEquipmentFromService(userPayload: ClientEquipment): Equipment {
-  const newEquipment = {
-    id: randomUUID(),
-    name: userPayload.name,
-    type: userPayload.type,
-    status: userPayload.status
-  }
-
-  equipment.push(newEquipment);
-
-  return newEquipment
+export async function createEquipmentFromService(userPayload: ClientEquipment): Promise<Equipment | undefined> {
+  return await createEquipment(userPayload)
 }
 
-export function updateEquipmentFromService(userPayload: PatchEquipment, id: string) {
-  const updatedEquipment = equipment.find(item => item.id === id)
-
-  if (!updatedEquipment) {
-    return undefined;
-  }
-
-  Object.assign(updatedEquipment, userPayload);
-
-  return updatedEquipment;
+export async function updateEquipmentFromService(id: string, userPayload: PatchEquipment): Promise<Equipment | undefined> {
+  return await updateEquipment(id, userPayload)
 }
 
-export function deleteEquipmentFromService(id: string): boolean {
-  const index = equipment.findIndex(item => item.id === id);
-
-  if (index === -1) {
-    return false;
-  }
-
-  equipment.splice(index, 1);
-
-  return true;
+export async function deleteEquipmentFromService(id: string): Promise<boolean> {
+  return await deleteEquipment(id)
 }
