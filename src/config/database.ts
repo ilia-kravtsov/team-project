@@ -1,13 +1,14 @@
 import { Sequelize } from 'sequelize';
+import { env } from './env.js';
 
 // Здесь настраиваю подключение к PostgreSQL через ORM Sequelize
 export const sequelize = new Sequelize(
-  'equipment_db',
-  'equipment_user',
-  'equipment_password',
+  env.DB_NAME!,
+  env.DB_USER!,
+  env.DB_PASSWORD!,
   {
-    host: 'localhost',    // Адрес сервера PostgreSQL
-    port: 5432,           // Порт подключения к БД
+    host: env.DB_HOST,    // Адрес сервера PostgreSQL
+    port: env.DB_PORT,    // Порт подключения к БД
     dialect: 'postgres',  // Указываю, с какой СУБД работаю
     logging: console.log, // Вывожу SQL запросы Sequelize в консоль
   }
