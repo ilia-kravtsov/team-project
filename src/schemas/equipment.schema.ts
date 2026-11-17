@@ -5,9 +5,10 @@ import {
 } from "../types/equipment.types.js";
 
 export const createEquipmentSchema = z.strictObject({
-  name: z.string().trim().min(1),
-  type: z.enum(EquipmentTypes),
-  status: z.enum(EquipmentStatuses)
+  // strictObject - дополнительные неизвестные поля запрещены
+  name: z.string().trim().min(1),   // непустая строка после удаления пробелов по краям
+  type: z.enum(EquipmentTypes),     // одно из допустимых значений EquipmentTypes
+  status: z.enum(EquipmentStatuses) // одно из допустимых значений EquipmentStatuses
 });
 
 export const updateEquipmentSchema = createEquipmentSchema
