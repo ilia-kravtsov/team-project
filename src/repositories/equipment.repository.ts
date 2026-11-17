@@ -13,6 +13,8 @@ const toEquipment = (model: EquipmentModel): Equipment => {
       createdAt: model.createdAt.toISOString(),
       updatedAt: model.updatedAt.toISOString(),
     }
+    // Метод .toISOString() преобразует объект Date в строку времени в формате ISO 8601
+    // 2026-11-17T14:30:00.000Z
 }
 
 export const findAllEquipment = async (): Promise<Equipment[]> => {

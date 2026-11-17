@@ -12,7 +12,8 @@ export const validateEquipment: RequestHandler = (req, res, next) => {
     return;
   }
 
-  req.body = result.data
+  // заменяю исходные данные от клиента результатом проверки Zod
+  req.body = result.data;
 
-  next()
+  next();
 }
